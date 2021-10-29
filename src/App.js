@@ -1,23 +1,52 @@
-import logo from './logo.svg';
+import { useSelector, useDispatch } from 'react-redux';
+import { 
+  increment,
+  decrement,
+  incrementBy
+} from './features/counter/counterSlice';
 import './App.css';
 
 function App() {
+  // useSelector will subscribe this component to any
+  // changes in the store
+  // Anytime state updates this component will rerender
+  const count = useSelector(state => state.counter.value);
+
+  const dispatch = useDispatch();
+
+  // when increment button is clicked
+  // fires off increment action craator
+  // creating an increment action and
+  // dispatching it to the increment reducer
+  function handleIncrementClick() {
+    dispatch(increment());
+  }
+
+  function handleDecrementClick() {
+    dispatch(decrement());
+  }
+
+  function handleIncrementByClick() {
+    dispatch(incrementBy(2));
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Counter App</h1>
+
+      <p>{count}</p>
+
+      <button onClick={handleDecrementClick}>
+        Decrement
+      </button>
+
+      <button onClick={handleIncrementClick}>
+        Increment
+      </button>
+
+      <button onClick={handleIncrementByClick}>
+        Increment By
+      </button>
     </div>
   );
 }
